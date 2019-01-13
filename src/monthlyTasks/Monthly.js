@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom'
 import './Monthly.css'
 import TaskRow from './TaskRow'
 import moment from 'moment'
-import {getAllTasks, createDates, getDates} from '../store'
+import {getAllTasks, createDates, getDates, rankTasks} from '../store'
 import { connect } from 'react-redux';
 import axios from 'axios'
 
@@ -12,7 +12,7 @@ const userId = 1
 
 const today = moment()
 const month = String(today._d).split(' ')[1]
-const year = 2018
+const year = 2019
 
 const ObjCreator = (month, year, monthLength) => {
     let datesArr = []
@@ -54,8 +54,9 @@ class Monthly extends Component {
         await this.props.getDates({month: month, year: year})
         if(this.props.days.length === 0) {
         await this.props.createDates(reqObj)
-        //await axios.post('http://localhost:8080/api/status', {tasks: this.props.tasks, dates: this.props.days})
-        await axios.post('https://habit-tracker-api-sharf.herokuapp.com/api/status', {tasks: this.props.tasks, dates: this.props.days})
+        await axios.post('http://localhost:8080/api/status', {tasks: this.props.tasks, dates: this.props.days})
+        //await axios.post('https://habit-tracker-api-sharf.herokuapp.com/api/status', {tasks: this.props.tasks, dates: this.props.days})
+        await this.props.rankTasks(this.props.tasks)
         }
     }
 
@@ -88,7 +89,8 @@ const mapDispatch = dispatch => {
     return {
         getTasks: (userId) => dispatch(getAllTasks(userId)),
         createDates: (reqObj) => dispatch(createDates(reqObj)),
-        getDates: (reqObj)=> dispatch(getDates(reqObj))
+        getDates: (reqObj)=> dispatch(getDates(reqObj)),
+        rankTasks: (tasks) =>dispatch(rankTasks(tasks))
     }
 }
 

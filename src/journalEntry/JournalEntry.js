@@ -36,17 +36,22 @@ class JournalEntry extends Component {
         const done = await axios.post('http://localhost:8080/api/journal', {userId: userId, dateId: todaysId, text: this.state.entry})
         //const done = await axios.post('https://habit-tracker-api-sharf.herokuapp.com/api/journal', {userId: userId, dateId: todaysId, text: this.state.entry})
         const happyOrSad = done.data
-        console.log('happyOrSad', happyOrSad)
         alert('Your Journal Entry has been saved!')
         this.setState({entry: ''})
         const stati = await axios.get(`http://localhost:8080/api/status/${todaysId}`)
         //const stati = await axios.get(`https://habit-tracker-api-sharf.herokuapp.com/api/status/${todaysId}`)
-        console.log('stati', stati)
         const filtered = stati.data.filter(status => status.status === true)
-        await filtered.map(async task => {
+        // await filtered.map(async task => {
+        //     await axios.post(`http://localhost:8080/api/task/${task.taskId}/${happyOrSad}`)
+        //     console.log('task updated', task)
+        //     //await axios.post(`https://habit-tracker-api-sharf.herokuapp.com/api/task/${task.taskId}/${happyOrSad}`)
+        //  })
+        for (const task of filtered) {
             await axios.post(`http://localhost:8080/api/task/${task.taskId}/${happyOrSad}`)
-            //await axios.post(`https://habit-tracker-api-sharf.herokuapp.com/api/task/${task.taskId}/${happyOrSad}`)
-         })
+        }
+        await this.props.getTasks(userId)
+        console.log('THIS.PROPS.TASKS', this.props.tasks)
+        await this.props.rankTasks(this.props.tasks) 
     }
     render() {
         return (
