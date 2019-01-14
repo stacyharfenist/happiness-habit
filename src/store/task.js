@@ -21,9 +21,8 @@ const rankedTasks = taskArr => ({
 
 export const getAllTasks = userId => {
     return async dispatch => {
-        //const {data} = await axios.get(`https://habit-tracker-api-sharf.herokuapp.com/api/task/${userId}`)
-        const {data} = await axios.get(`http://localhost:8080/api/task/${userId}`)
-        console.log('DATA', data)
+        const {data} = await axios.get(`https://habit-tracker-api-sharf.herokuapp.com/api/task/${userId}`)
+        //const {data} = await axios.get(`http://localhost:8080/api/task/${userId}`)
         dispatch(gotAllTasks(data))
     }
 }

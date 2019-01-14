@@ -54,8 +54,8 @@ class Monthly extends Component {
         await this.props.getDates({month: month, year: year})
         if(this.props.days.length === 0) {
         await this.props.createDates(reqObj)
-        await axios.post('http://localhost:8080/api/status', {tasks: this.props.tasks, dates: this.props.days})
-        //await axios.post('https://habit-tracker-api-sharf.herokuapp.com/api/status', {tasks: this.props.tasks, dates: this.props.days})
+        //await axios.post('http://localhost:8080/api/status', {tasks: this.props.tasks, dates: this.props.days})
+        await axios.post('https://habit-tracker-api-sharf.herokuapp.com/api/status', {tasks: this.props.tasks, dates: this.props.days})
         await this.props.rankTasks(this.props.tasks)
         }
     }
