@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import styled from "styled-components"
 
+const Button = styled.button`
+
+background: ${props => props.primary? "gray" : "#20BDAD"};
+color: "white";
+height: 3em
+width: 3em
+font-size: .75em;
+margin: .25em;
+padding: .5em .5em;
+border-radius: 80%
+`;
+//#2ACDBC
 
 class TaskBox extends Component {
     constructor(props) {
@@ -25,11 +38,11 @@ class TaskBox extends Component {
     render() {
         if(this.state.status) {
             return (
-                <button id = 'true' onClick = {this.handleClick}>{this.props.day.dayNum}</button>
+                <Button onClick = {this.handleClick}>{this.props.day.dayNum}</Button>
         )
         } else {
             return (
-                <button id = 'false' onClick = {this.handleClick}>{this.props.day.dayNum}</button>
+                <Button primary onClick = {this.handleClick}>{this.props.day.dayNum}</Button>
             )
         }
     }

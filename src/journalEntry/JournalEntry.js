@@ -41,13 +41,9 @@ class JournalEntry extends Component {
         const stati = await axios.get(`http://localhost:8080/api/status/${todaysId}`)
         //const stati = await axios.get(`https://habit-tracker-api-sharf.herokuapp.com/api/status/${todaysId}`)
         const filtered = stati.data.filter(status => status.status === true)
-        // await filtered.map(async task => {
-        //     await axios.post(`http://localhost:8080/api/task/${task.taskId}/${happyOrSad}`)
-        //     console.log('task updated', task)
-        //     //await axios.post(`https://habit-tracker-api-sharf.herokuapp.com/api/task/${task.taskId}/${happyOrSad}`)
-        //  })
         for (const task of filtered) {
             await axios.post(`http://localhost:8080/api/task/${task.taskId}/${happyOrSad}`)
+            //await axios.post(`https://habit-tracker-api-sharf.herokuapp.com/api/task/${task.taskId}/${happyOrSad}`)
         }
         await this.props.getTasks(userId)
         console.log('THIS.PROPS.TASKS', this.props.tasks)
